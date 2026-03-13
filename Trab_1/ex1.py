@@ -1,5 +1,6 @@
 import numpy as np
 import timeit
+import random
 
 def mat_prod(A: np.ndarray, B: np.ndarray):
     A_nrow, A_ncol = A.shape
@@ -27,38 +28,11 @@ def mat_dot_prod(A: np.ndarray, B: np.ndarray):
     C = np.zeros((A_nrow, B_ncol))
     for i in range(A_nrow):
         for j in range(B_ncol):
-            C[i,j] = np.dot(A[i],B[j])
+            C[i,j] = np.dot(A[i,:],B[:,j])
     
     return C
 
-def solve_tridiag(A):
-    A_orig = A.copy()
-    A_nrow, A_ncol = A.shape
-    ident = np.identity(A_nrow)
-    
-    for i in range(A_nrow-1):
-        t = A[i,i]/A[i+1,i]
-        A[i+1] = A[i] - t*A[i+1]
-        ident[i+1] = ident[i] - t*ident[i+1]
-    
-    print(A)
-    
-    for i in range(1,A_nrow):
-        t = A[i-1,i]/A[i,i]
-        A[i-1,i] = A[i-1,i] - t*A[i,i]
-        ident[i-1] = ident[i-1] - t*ident[i,i]
-    
-    for i in range(A_nrow):
-        t = 1/A[i,i]
-        A[i,i] = t*A[i,i]
-        ident[i,i] = t*ident[i,i]
-    
-    print("A inversa * A:")
-    print(A_orig)
-    print(ident)
-    print(ident@A_orig)
-    print("\n")
-    return A
+
 
 tempo = timeit.timeit("mat_prod(np.random.randint(1, 100,(5,5)), np.random.randint(1, 100,(5,5))),", globals= globals(), number = 100)
 print(tempo)
@@ -87,8 +61,10 @@ def criar_tridiagonal(n, sub, main, super):
     return matrix
 
 # Exemplo: n=4, sub=-1, main=2, super=-1
-print(criar_tridiagonal(4, -1, 2, -1))
-A= np.array([[30,5,3],[1,19,40],[1,17,8]])
-B = criar_tridiagonal(4, -1, 2, -1)
+# print(criar_tridiagonal(4, -1, 2, -1))
+# A= np.array([[30,5,3],[1,19,40],[1,17,8]])
+# B = criar_tridiagonal(10, random.randint(1, 100), random.randint(1, 100), random.randint(1, 100))
+# b = np.random.randint(1,50,(1,10))
 
-print(solve_tridiag(B))
+
+
