@@ -43,28 +43,5 @@ print(tempo)
 tempo = timeit.timeit("np.random.randint(1, 100,(5,5))@np.random.randint(1, 100,(5,5))", globals= globals(), number = 100)
 print(tempo)
 
-def criar_tridiagonal(n, sub, main, super):
-    # Cria matriz n x n de zeros
-    matrix = np.zeros((n, n))
-    
-    # Preenche a diagonal principal
-    np.fill_diagonal(matrix, main)
-    
-    # Preenche a diagonal superior (k=1)
-    # Seleciona a submatriz a partir da primeira linha, segunda coluna
-    np.fill_diagonal(matrix[:, 1:], super)
-    
-    # Preenche a diagonal inferior (k=-1)
-    # Seleciona a submatriz a partir da segunda linha, primeira coluna
-    np.fill_diagonal(matrix[1:, :], sub)
-    
-    return matrix
-
-# Exemplo: n=4, sub=-1, main=2, super=-1
-# print(criar_tridiagonal(4, -1, 2, -1))
-# A= np.array([[30,5,3],[1,19,40],[1,17,8]])
-# B = criar_tridiagonal(10, random.randint(1, 100), random.randint(1, 100), random.randint(1, 100))
-# b = np.random.randint(1,50,(1,10))
-
 
 
