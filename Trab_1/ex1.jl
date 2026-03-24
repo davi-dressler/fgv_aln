@@ -1,5 +1,6 @@
 using LinearAlgebra
 
+#-------------------------------------------------- QUESTÃO 1 - LETRA A --------------------------------------------------
 function mat_prod(A, B)
     A_nrow, A_ncol = size(A)
     B_nrow, B_ncol = size(B)
@@ -18,6 +19,7 @@ function mat_prod(A, B)
     end
 end
 
+#-------------------------------------------------- QUESTÃO 1 - LETRA C --------------------------------------------------
 function mat_dot_prod(A, B)
     A_nrow, A_ncol = size(A)
     B_nrow, B_ncol = size(B)
