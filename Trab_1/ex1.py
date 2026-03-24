@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import timeit
 import random
 
@@ -36,7 +37,7 @@ def mat_dot_prod(A: np.ndarray, B: np.ndarray):
 
 
 
-# tempo = timeit.timeit("mat_prod(np.random.randint(1, 100,(5,5)), np.random.randint(1, 100,(5,5))),", globals= globals(), number = 100)
+# tempo = timeit.timeit("mat_prod(np.random.randint(1, 100,(200,200)), np.random.randint(1, 100,(500,500))),", globals= globals(), number = 1)
 # print(tempo)
 
 # tempo = timeit.timeit("mat_dot_prod(np.random.randint(1, 100,(5,5)), np.random.randint(1, 100,(5,5))),", globals= globals(), number = 100)
@@ -47,23 +48,32 @@ def mat_dot_prod(A: np.ndarray, B: np.ndarray):
 
 # data_solve_tridiag = []
 
+def benchmark(func, *args, num_times = 2):
+    for i in range(2):
+        func(*args)
+    
+    arr = np.zeros(num_times)
+    
+    for i in range(num_times):
+        initial_time = time.perf_counter()
+        func(*args)
+        final_time = time.perf_counter()
+        
+        arr[i] = final_time - initial_time
+        
+    min = arr.min()
+    
+    return min
+
 sizes = [(5,5), (10,10), (15,15), (450,450), (500,500)]
 sizes_long = [(100,400), (50, 500)]
 sizes_wide = [(400, 100), (500, 50)]
 
-lim_inf = 25
-lim_max = 100
-for n in range(lim_inf, lim_max, 25):
 
-    A_rand = np.diag(np.random.rand(n)) + np.diag(np.random.rand(n-1), -1) + np.diag(np.random.rand(n-1), 1)
-    b_rand = np.random.rand(n)
+for size in sizes:
 
-    tempos = [timeit.timeit("solve_tridiag(A_rand, b_rand)", globals= globals(), number= 20) for i in range(20)]
-    tempo_estavel = min(tempos)
-
-    data_solve_tridiag.append({"size": n, "process_time": tempo_estavel})
-
-df_solve_tridiag = pd.DataFrame(data_solve_tridiag)
-df_solve_tridiag.plot(x="size", y="process_time", title="Desempenho")
+    tempo_estavel = benchmark(mat_prod, np.random.randint(1, 100, size), np.random.randint(1, 100, size))
+    print(tempo_estavel)
+    
 
 
