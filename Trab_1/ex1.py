@@ -37,17 +37,9 @@ def mat_dot_prod(A: np.ndarray, B: np.ndarray):
 
 
 
-# tempo = timeit.timeit("mat_prod(np.random.randint(1, 100,(200,200)), np.random.randint(1, 100,(500,500))),", globals= globals(), number = 1)
-# print(tempo)
+# APÊNDICE
 
-# tempo = timeit.timeit("mat_dot_prod(np.random.randint(1, 100,(5,5)), np.random.randint(1, 100,(5,5))),", globals= globals(), number = 100)
-# print(tempo)
-
-# tempo = timeit.timeit("np.random.randint(1, 100,(5,5))@np.random.randint(1, 100,(5,5))", globals= globals(), number = 100)
-# print(tempo)
-
-# data_solve_tridiag = []
-
+# Função usada para calcular os tempos
 def benchmark(func, *args, num_times = 2):
     for i in range(2):
         func(*args)
